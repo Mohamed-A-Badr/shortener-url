@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     # 3rd part apps
     "drf_spectacular",
     "rest_framework",
+    # local apps
+    "shortener.apps.ShortenerConfig",
 ]
 
 MIDDLEWARE = [
