@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 3rd part apps
+    "drf_spectacular",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,12 @@ sentry_sdk.init(
         "continuous_profiling_auto_start": True,
     },
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS':"drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': "URL Shortener Service", 
+    "VERSION": "1.0.0",
+}
