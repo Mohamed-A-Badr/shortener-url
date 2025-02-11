@@ -1,7 +1,6 @@
 from django.core.cache import cache
 from django.shortcuts import get_object_or_404, redirect
-from rest_framework import generics, status
-from rest_framework.response import Response
+from rest_framework import generics
 
 from .models import ShortenedURL
 from .serializers import ShortenedURLSerializer
@@ -10,15 +9,6 @@ from .serializers import ShortenedURLSerializer
 class ShortURLView(generics.CreateAPIView):
     queryset = ShortenedURL.objects.all()
     serializer_class = ShortenedURLSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(
-                {"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST
-            )
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class RedirectToWebsiteView(generics.GenericAPIView):
@@ -30,10 +20,10 @@ class RedirectToWebsiteView(generics.GenericAPIView):
         instance = get_object_or_404(ShortenedURL, short_code=short_code)
         cache.set(
             f"short_url:{short_code}",
-            instance.original_url,
-            timeout=3600,
+            instance.original_url.url,
+            timeout=86400,
         )
-        return redirect(instance.original_url)
+        return redirect(instance.original_url.url)
 
 
 short_url = ShortURLView.as_view()
