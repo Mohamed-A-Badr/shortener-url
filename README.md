@@ -16,8 +16,8 @@ This is a URL Shortener service built with Django. It allows users to shorten lo
 1. Clone the repository:
 
    ```sh
-   git clone <repository-url>
-   cd <repository-directory>
+   https://github.com/Mohamed-A-Badr/shortener-url.git
+   cd shortener-url
    ```
 
 2. Create a virtual environment and activate it:
@@ -33,18 +33,14 @@ This is a URL Shortener service built with Django. It allows users to shorten lo
    pip install -r requirements.txt
    ```
 
-4. Create a file based on the file and fill in the required environment variables.
+4. Update the `.env-example` file and fill it with the required environment variables.
 
-5. Apply the migrations:
+5. Run Docker engine or Docker Desktop
+
+6. Build and start the containers:
 
    ```sh
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-
-6. Run the development server:
-   ```sh
-   python manage.py runserver
+   docker-compose up --build
    ```
 
 ## Usage
@@ -57,15 +53,4 @@ This is a URL Shortener service built with Django. It allows users to shorten lo
 
 - `POST /api/v1/shortener/`: Shorten a URL.
 - `GET /api/v1/<short_code>/`: Redirect to the original URL.
-
-## Docker
-
-To run the project with Docker, use the following commands:
-
-1. Build and start the containers:
-
-   ```sh
-   docker-compose up --build
-   ```
-
-2. The application will be available at `http://localhost:8000`.
+- The application will be available at `http://localhost:8000`.
