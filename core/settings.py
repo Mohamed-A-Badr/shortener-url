@@ -152,3 +152,13 @@ SPECTACULAR_SETTINGS = {
     'TITLE': "URL Shortener Service", 
     "VERSION": "1.0.0",
 }
+
+CACHES = {
+    'default': {
+        "BACKEND": 'django_redis.cache.RedisCache', 
+        "LOCATION": os.environ.get("REDIS_URL"), 
+        "OPTIONS":{
+            "CACHE_CLASS":"django_redis.client.DefaultClient", 
+        }
+    }
+}

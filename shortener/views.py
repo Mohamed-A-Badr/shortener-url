@@ -1,4 +1,5 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.core.cache import cache
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -22,7 +23,16 @@ class ShortURLView(generics.CreateAPIView):
 
 class RedirectToWebsiteView(generics.GenericAPIView):
     def get(self, request, short_code):
+        cached_url = cache.get(f"short_url:{short_code}")
+        if cached_url:
+            return redirect(cached_url)
+
         instance = get_object_or_404(ShortenedURL, short_code=short_code)
+        cache.set(
+            f"short_url:{short_code}",
+            instance.original_url,
+            timeout=3600,
+        )
         return redirect(instance.original_url)
 
 
